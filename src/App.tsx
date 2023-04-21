@@ -1,4 +1,5 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
+import * as Automerge from "@automerge/automerge";
 import ReactFlow, {
   addEdge,
   MiniMap,
@@ -6,6 +7,8 @@ import ReactFlow, {
   Background,
   useNodesState,
   useEdgesState,
+  Edge,
+  Node,
 } from "reactflow";
 
 import {
@@ -28,12 +31,21 @@ const minimapStyle = {
 const onInit = (reactFlowInstance: any) =>
   console.log("flow loaded:", reactFlowInstance);
 
+type Canvas = {
+  nodes: Node<any>[];
+  edges: Edge<any>[];
+};
+
 const OverviewFlow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const onConnect = useCallback(
     (params: any) => setEdges((eds) => addEdge(params, eds)),
     []
+  );
+
+  const amRef = useRef(
+    Automerge.from<Canvas>({ nodes: initialNodes, edges: initialEdges })
   );
 
   // we are using a bit of a shortcut here to adjust the edge type
