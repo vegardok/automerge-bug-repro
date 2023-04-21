@@ -1,5 +1,4 @@
-import React from "react";
-import { MarkerType, Position, Node } from "reactflow";
+import { Edge, Node } from "reactflow";
 
 export const nodes: Node[] = [
   {
@@ -27,7 +26,7 @@ export const nodes: Node[] = [
   },
 ];
 
-export const edges = [
+export const edges: Edge[] = [
   { id: "e1-2", source: "1", target: "2", label: "this is an edge label" },
   { id: "e1-3", source: "1", target: "3", animated: true },
 ];
